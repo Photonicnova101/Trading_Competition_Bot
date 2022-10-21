@@ -99,15 +99,15 @@ class BackTestEngine:
                 if i == 0:
                     continue
                 # If the date has changed
-                if current_date != row[2]:
+                if current_date != row[1]:
                     # Call the strategy
                     self._call_strategy(current_date, raw_minute_data, offered_options)
                     # Register new data
-                    current_date = row[2]
+                    current_date = row[1]
                     logging.info("####"+current_date+"####")
-                    offered_options, raw_minute_data = {'underlying': (1e10, float(row[16]), 1e10, float(row[17]))}, []
+                    offered_options, raw_minute_data = {'underlying': (1e10, float(row[15]), 1e10, float(row[16]))}, []
                 # Dictionary of the volume and price of options (Bid Volume, Bid Price, Ask Volume, Ask Price)
-                offered_options[row[5] + "_" + row[4]] = (float(row[12]), float(row[13]), float(row[14]), float(row[15]))
+                offered_options[row[4] + "_" + row[3]] = (float(row[11]), float(row[12]), float(row[13]), float(row[14]))
                 # Append to raw_minute_data
                 raw_minute_data.append(row)
             # Submit any remaining data for the last minute of the file to the strategy
@@ -154,5 +154,5 @@ class BackTestEngine:
         plt.show()
 
 
-bt = BackTestEngine("data/first_5_min.csv")
+bt = BackTestEngine("data.csv")
 bt.run()
